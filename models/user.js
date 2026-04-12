@@ -13,7 +13,7 @@ const userSchema=new mongoose.Schema(
                 ref:'Course'
             }
         ]
-    },{timestamps});
+    },{timestamps:true});
 
     const  user=mongoose.model('user',userSchema)
     export default user

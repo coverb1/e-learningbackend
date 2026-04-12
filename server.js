@@ -15,7 +15,7 @@ await connectDB()
 app.use(cors())
 // routes
 app.get('/',(req,res)=>res.send('API is Working'))
-app.post('/clerk',express.json(),clerkWebhook)
+app.post('/clerk',express.raw({ type: 'application/json' }),clerkWebhook)
 // port
 const PORT=process.env.PORT||5000
 app.listen(PORT,()=>{
