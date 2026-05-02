@@ -1,6 +1,8 @@
 import express from 'express'
-import { updateRoleToEducator } from '../controllers/educatorController.js'
+import { addCourse, updateRoleToEducator } from '../controllers/educatorController.js'
 import { getAuth } from '@clerk/express'
+import upload from '../config/multer.js'
+import { protectEducator } from '../middlewares/authMiddleware.js'
 
 
 const educatorRoutes=express.Router()
@@ -20,5 +22,6 @@ const requireApiAuth = (req, res, next) => {
 
 // add educator role
 educatorRoutes.post('/update-role', requireApiAuth, updateRoleToEducator)
+educatorRoutes.post('/add-course',upload.single('image'),protectEducator,addCourse)
 
 export default educatorRoutes
