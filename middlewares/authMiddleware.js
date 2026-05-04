@@ -4,7 +4,7 @@ import { clerkClient, getAuth } from "@clerk/express";
 export const protectEducator=async(req,res,next)=>{
 try {
     const {userId}=getAuth(req)
-    console.log(userId)
+    // console.log(userId)
     const responce=await clerkClient.users.getUser(userId)
 
     if (responce.publicMetadata.role!=='educator') {

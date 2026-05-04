@@ -17,7 +17,7 @@ const chapterScheema= new mongoose.Schema({
 },{_id:false})
 
 const courseScheema = new mongoose.Schema({
-    courseTittle: { type: String, required: true },
+    courseTitle: { type: String, required: true },
     courseDescription: { type: String, required: true },
     courseThumbnail: { type: String, required: true },
     coursePrice: { type: String, required: true },

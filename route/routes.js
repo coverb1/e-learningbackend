@@ -1,27 +1,17 @@
 import express from 'express'
-import { addCourse, updateRoleToEducator } from '../controllers/educatorController.js'
-import { getAuth } from '@clerk/express'
+import { addCourse, getEducatorCourse, updateRoleToEducator } from '../controllers/educatorController.js'
 import upload from '../config/multer.js'
 import { protectEducator } from '../middlewares/authMiddleware.js'
-
-
-const educatorRoutes=express.Router()
-
-const requireApiAuth = (req, res, next) => {
-  const { userId } = getAuth(req)
-
-  if (!userId) {
-    return res.status(401).json({
-      success: false,
-      message: 'Unauthorized. Please send a valid Clerk Bearer token.'
-    })
-  }
-
-  next()
-}
+import { requireApiAuth } from '../middlewares/requireApiAuth.js' // 
+const educatorRoutes = express.Router()
 
 // add educator role
 educatorRoutes.post('/update-role', requireApiAuth, updateRoleToEducator)
-educatorRoutes.post('/add-course',upload.single('image'),protectEducator,addCourse)
+
+// add course
+educatorRoutes.post('/add-course',requireApiAuth,protectEducator,upload.single('image'),  addCourse)
+
+// get courses
+educatorRoutes.get('/course',requireApiAuth,protectEducator, getEducatorCourse)
 
 export default educatorRoutes
