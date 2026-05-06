@@ -1,5 +1,5 @@
 import express from 'express'
-import { addCourse, getEducatorCourse, updateRoleToEducator } from '../controllers/educatorController.js'
+import { addCourse, educatorDashboardData, getEducatorCourse, updateRoleToEducator } from '../controllers/educatorController.js'
 import upload from '../config/multer.js'
 import { protectEducator } from '../middlewares/authMiddleware.js'
 import { requireApiAuth } from '../middlewares/requireApiAuth.js' // 
@@ -13,5 +13,9 @@ educatorRoutes.post('/add-course',requireApiAuth,protectEducator,upload.single('
 
 // get courses
 educatorRoutes.get('/course',requireApiAuth,protectEducator, getEducatorCourse)
+
+educatorRoutes.get('/dashboard',requireApiAuth,protectEducator, educatorDashboardData)
+
+educatorRoutes.get('/enrolled-student',requireApiAuth,protectEducator, educatorDashboardData)
 
 export default educatorRoutes
