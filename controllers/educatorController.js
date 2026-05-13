@@ -66,6 +66,10 @@ export const getEducatorCourse = async (req, res) => {
     }
 }
 // get educator Dashboard Data (Total Earning, EnrolledStudents,no.of Course)
+// Get educator ID
+// Find educator courses
+// Find students who bought those courses
+// Send enrolled students data
 
 export const educatorDashboardData = async () => {
     try {
@@ -79,6 +83,9 @@ export const educatorDashboardData = async () => {
 
         const purchases = await purchase.find({
             courseId: { $in: courseIds },
+            // courseIds :“All courses created by THIS educator
+            // courseId:The course that a student bought
+            // “Find purchases where the purchased course is one of THIS educator’s courses”
             status: 'completed'
         }).populate('userId', 'name imageUrl').populate('courseId', 'courseTittle')
 

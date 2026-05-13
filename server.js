@@ -6,6 +6,7 @@ import { clerkWebhook } from './controllers/webhooks.js'
 import educatorRoutes from './route/routes.js'
 import { clerkMiddleware } from '@clerk/express'
 import connectCloudinary from './config/cloudinary.js'
+import courseRouter from './route/courseRouter.js'
 
 // initialise express
 const app = express()
@@ -24,6 +25,7 @@ app.get('/', (req, res) => res.send('API is Working '))
 
 // Raw body MUST come before express.json()
 app.post('/clerk', express.raw({ type: 'application/json' }), clerkWebhook)
+app.use('/api/course',express.json(),courseRouter)
 
 // express.json() only for these routes
 app.use('/api/educator', express.json(), educatorRoutes)
