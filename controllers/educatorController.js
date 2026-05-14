@@ -1,8 +1,9 @@
-import { clerkClient, getAuth } from '@clerk/express'
+import { clerkClient, getAuth,} from '@clerk/express'
 import Course from '../models/Course.js'
 import { v2 as cloudinary } from 'cloudinary'
 import course from '../models/Course.js'
 import { purchase } from '../models/purchase.js'
+import User from '../models/user.js'
 
 // update role to educator
 export const updateRoleToEducator = async (req, res) => {
@@ -39,7 +40,11 @@ export const addCourse = async (req, res) => {
 
         //  2. Parse and build complete course data
         const parsedCourseData = JSON.parse(courseData)
-        parsedCourseData.educator = userId //dding a new field called educator
+        const mongoUser=await User.findOne({
+            clerkId:userId
+        })
+        parsedCourseData.educator=mongoUser._id
+         //dding a new field called educator
         parsedCourseData.courseThumbnail = imageUpload.secure_url //  We are adding another field: courseThumbnail
 
         // 3. Now create — all required fields are present
